@@ -32,9 +32,9 @@ This code will receive an SMS, identify the sender's phone number, and automatic
 
 #include "Adafruit_FONA.h"
 
-#define FONA_RX 2
-#define FONA_TX 3
-#define FONA_RST 4
+#define FONA_RX 3
+#define FONA_TX 4
+#define FONA_RST 2
 
 // this is a large buffer for replies
 char replybuffer[255];
@@ -202,11 +202,27 @@ void loop() {
           batStat += String(vbat);
           batStat += "% left.";
         }
+
         
+        char input[batStat.length()];
+        batStat.toCharArray(input, batStat.length());
+        int inputLen = batStat.length();
+        Serial.println(input);
+        int encodedLen = base64_enc_len(inputLen);
+        
+      //  Serial.print(input); Serial.print(" = ");
+        
+        char encoded[encodedLen];
+        // note input is consumed in this step: it will be empty afterwards
+        base64_encode(encoded, input, inputLen); 
+        
+        Serial.println(encoded);
+        delay(1000);
+
         //Send back an automatic response
         Serial.println("Sending reponse...status");
-        batStat.toCharArray(replybuffer,255);
-        if (!fona.sendSMS(callerIDbuffer, replybuffer)) {
+//        batStat.toCharArray(replybuffer,255);
+        if (!fona.sendSMS(callerIDbuffer, encoded)) {
           Serial.println(F("Failed"));
         } else {
           Serial.println(F("Sent!"));
