@@ -75,8 +75,17 @@ import android.net.Uri;
        outMsg = "STATUS";
      }
      
-     sm.sendTextMessage("17783194200", null, outMsg, null, null);
-     delay(1000);
+     if (mouseX > displayWidth/2)
+     {
+       sm.sendTextMessage("17783194200", null, outMsg, null, null);
+       delay(1000);
+     }
+     else
+     {
+       message = "SAFEZONE";
+     }
+     
+     
    }
    else
    {
