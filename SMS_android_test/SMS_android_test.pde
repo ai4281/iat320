@@ -1,8 +1,4 @@
 /*
-Example code to receive SMS in Processing, Tested on Processing 2.0b7 and a phone on Android Jelly bean
-by Julien Rat
-feb 2013
-
 Make sure to enable this permission in your sketch:
 RECEIVE_SMS
 */
