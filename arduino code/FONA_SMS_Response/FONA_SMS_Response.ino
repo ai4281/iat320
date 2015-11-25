@@ -27,6 +27,9 @@ This code will receive an SMS, identify the sender's phone number, and automatic
 
 */
 
+//adding base64 lbr
+#include <Base64.h>
+
 #include "Adafruit_FONA.h"
 
 #define FONA_RX 2
@@ -140,7 +143,26 @@ void loop() {
         String tmpData = String(replybuffer);
         tmpData += "gps";
         
-        tmpData.toCharArray(replybuffer,255);
+        
+        // encoding
+//        String data = "" + String(millis());
+        char input[sizeof(tmpData)];
+        tmpData.toCharArray(input, sizeof(tmpData));
+        int inputLen = sizeof(tmpData);
+        
+        int encodedLen = base64_enc_len(inputLen);
+        
+      //  Serial.print(input); Serial.print(" = ");
+        
+        char encoded[encodedLen];
+        // note input is consumed in this step: it will be empty afterwards
+        base64_encode(encoded, input, inputLen); 
+        
+        Serial.print(encoded);
+        delay(1000);
+
+        strncpy(encoded, replybuffer, inputLen);
+//        tmpData.toCharArray(replybuffer,255);
         
 //        replybuffer += "gps";
         
