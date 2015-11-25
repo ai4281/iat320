@@ -141,15 +141,15 @@ void loop() {
           Serial.print(F("Fail code #")); Serial.println(returncode);
         }
         String tmpData = String(replybuffer);
-        tmpData += "gps";
+        tmpData += "gps ";
         
         
         // encoding
-//        String data = "" + String(millis());
-        char input[sizeof(tmpData)];
-        tmpData.toCharArray(input, sizeof(tmpData));
-        int inputLen = sizeof(tmpData);
-        
+//String data = "" + String(millis());
+        char input[tmpData.length()];
+        tmpData.toCharArray(input, tmpData.length());
+        int inputLen = tmpData.length();
+        Serial.println(input);
         int encodedLen = base64_enc_len(inputLen);
         
       //  Serial.print(input); Serial.print(" = ");
@@ -158,10 +158,10 @@ void loop() {
         // note input is consumed in this step: it will be empty afterwards
         base64_encode(encoded, input, inputLen); 
         
-        Serial.print(encoded);
+        Serial.println(encoded);
         delay(1000);
 
-        strncpy(encoded, replybuffer, inputLen);
+//        strncpy(encoded, replybuffer, inputLen);
 //        tmpData.toCharArray(replybuffer,255);
         
 //        replybuffer += "gps";
@@ -174,7 +174,7 @@ void loop() {
 //          replybuffer2 = strdup(p) + "," + replybuffer2;
 //          replybuffer2 = "http://maps.google.com/maps?q=" + replybuffer2;
           
-        if (!fona.sendSMS(callerIDbuffer, replybuffer)) {
+        if (!fona.sendSMS(callerIDbuffer, encoded)) {
 //        if (!fona.sendSMS(callerIDbuffer, "http://maps.google.com/maps?q=49.188087,-122.848480")) {
           Serial.println(F("Failed"));
         } else {
