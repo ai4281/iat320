@@ -14,7 +14,7 @@ import java.util.Locale;
 
 //adding decode lbr, yang
 
-import java.util.Base64;
+import android.util.Base64;
 import java.lang.Object.*;
 
 import android.app.Activity;
@@ -82,6 +82,7 @@ import android.net.Uri;
      }
      else
      {
+       delay(5000);
        message = "SAFEZONE";
      }
      
@@ -189,7 +190,7 @@ public class SmsReceiver extends BroadcastReceiver //Class to get SMS
 //adding decode function
 
 public String decode(String msg){
-  byte[] decoded = Base64.getDecoder().decode(msg);
+  byte[] decoded = Base64.decode(msg, Base64.DEFAULT);
   String decodeMsg = new String(decoded);
   return decodeMsg;
 }
