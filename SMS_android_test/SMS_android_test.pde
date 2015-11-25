@@ -12,7 +12,10 @@ import java.net.*;
 import java.lang.String;
 import java.util.Locale;
 
-//yang
+//adding decode lbr, yang
+
+import java.util.Base64;
+import java.lang.Object.*;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -171,6 +174,15 @@ public class SmsReceiver extends BroadcastReceiver //Class to get SMS
         
     }
 }
+
+//adding decode function
+
+public String decode(String msg){
+  byte[] decoded = Base64.getDecoder().decode(msg);
+  String decodeMsg = new String(decoded);
+  return decodeMsg;
+}
+  
 
 
 
