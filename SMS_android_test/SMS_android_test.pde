@@ -132,7 +132,9 @@ public class SmsReceiver extends BroadcastReceiver //Class to get SMS
                     
         }
         
-        message=str;
+        //adding decoder to the code, remove original message passing
+        //message=str;
+        message=decode(str);
         
         if (message.contains("gps"))
         {
