@@ -83,6 +83,17 @@ void setup() {
 char fonaInBuffer[64];          //for notifications from the FONA
 
 void loop() {
+
+  // send data only when you receive data:
+  while (Serial.available() > 0) {
+    delay(200);
+          // read the incoming byte:    
+          String incomingByte = Serial.readString();
+          char serialbuffer[incomingByte.length()];
+          incomingByte.toCharArray(serialbuffer, incomingByte.length());
+          fonaSS.write(serialbuffer, inMcomingByte.length());
+//          fonaSS.write(incomingByte);
+  }
   
   char* bufPtr = fonaInBuffer;    //handy buffer pointer
   
